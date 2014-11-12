@@ -1,8 +1,5 @@
 #coding: utf-8
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import unittest
@@ -16,19 +13,17 @@ class TestScenario1(unittest.TestCase):
         self.driver = webdriver.Firefox()
         self.driver.get(UrlLinks.startPage)
 
-
     def test1(self):
-
         signUp = self.driver.find_element(*MainPageLocators.SIGNUP_BUTTON)
         signUp.click()
         self.assertEquals(UrlLinks.signUpPage, self.driver.current_url)
 
-        checkBox = self.driver.find_element(MainPageLocators.CHECKBOX)
+        checkBox = self.driver.find_element(*MainPageLocators.CHECKBOX)
         checkBox.click()
         self.assertTrue(checkBox.is_selected())
 
         wait = WebDriverWait(self.driver, 5)
-        solutionForm = wait.until(EC.element_to_be_clickable((By.XPATH, ".//*[@id='form-signup']/input[5]")))
+        solutionForm = wait.until(EC.element_to_be_clickable(MainPageLocators.SOLUTIONFORM))
         self.assertTrue(solutionForm)
 
     def tearDown(self):
