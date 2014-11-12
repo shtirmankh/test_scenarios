@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import unittest
 import time
+import HTMLTestRunner
 
 class TestScenario2(unittest.TestCase):
 
@@ -39,5 +40,14 @@ class TestScenario2(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
-if __name__ == "__main__":
-    unittest.main()
+if __name__ == '__main__':
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(TestScenario2))
+        dateTimeStamp = time.strftime('%Y%m%d_%H_%M_%S')
+        buf = file("TestReport" + "_" + dateTimeStamp + ".html", 'wb')
+        runner = HTMLTestRunner.HTMLTestRunner(
+             stream=buf,
+             title='Test the Report',
+             description='Result of tests'
+             )
+        runner.run(suite)
