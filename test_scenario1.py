@@ -8,21 +8,22 @@ from selenium.webdriver.support import expected_conditions as EC
 import unittest
 import time
 import HTMLTestRunner
+from locators import MainPageLocators, UrlLinks
 
 class TestScenario1(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Firefox()
-        mainPage = self.driver.get("http://devmate.com")
+        self.driver.get(UrlLinks.startPage)
 
 
     def test1(self):
-        signUpPage = "http://devmate.com/signup"
-        signUpButton = self.driver.find_element_by_css_selector(".btn.btn-construct.btn-sign-up-now")
-        signUpButton.click()
-        self.assertEquals(signUpPage, self.driver.current_url)
 
-        checkBox = self.driver.find_element_by_name("selling_outside_app_store")
+        signUp = self.driver.find_element(*MainPageLocators.SIGNUP_BUTTON)
+        signUp.click()
+        self.assertEquals(UrlLinks.signUpPage, self.driver.current_url)
+
+        checkBox = self.driver.find_element(MainPageLocators.CHECKBOX)
         checkBox.click()
         self.assertTrue(checkBox.is_selected())
 
